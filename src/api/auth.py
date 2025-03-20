@@ -15,7 +15,7 @@ router = APIRouter(prefix='/auth', tags=['Authentication'])
 def login(
     credentials: dict = Body(
         ...,
-        title='Customers Credentiales for login',
+        title='passengers Credentiales for login',
         json_schema_extra=Login.schema()
         ),
     ):
