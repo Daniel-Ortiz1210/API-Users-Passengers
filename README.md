@@ -1,8 +1,8 @@
-# [Microservice] API Users Reservations
+# [Microservice] API Users Passengers
 
 ## Contents
 
-- [\[Microservice\] API Users Reservations](#microservice-api-users-reservations)
+- [\[Microservice\] API Users Passengers](#microservice-api-users-passengers)
   - [Contents](#contents)
   - [Project Setup and Installation](#project-setup-and-installation)
     - [Prerequisites](#prerequisites)
@@ -29,8 +29,8 @@ Before you begin, ensure that you have the following tools installed on your mac
 First, you need to clone this repository to your local machine. Open a terminal and run the following command:
 
 ```bash
-git clone https://github.com/Daniel-Ortiz1210/API-Users-Reservations.git
-cd <API-Users-Reservations>
+git clone https://github.com/Daniel-Ortiz1210/API-Users-Passengers.git
+cd <API-Users-Passengers>
 ```
 
 ### 3. Set Up the Environment Variables
