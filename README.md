@@ -39,7 +39,7 @@ Create a `.env` file in the root directory of the project and copy the content f
 If you don't have the file, you can create it manually with the following content:
 
 ```bash
-APP_NAME='[Microservice] API Users Reservations'
+APP_NAME='[Microservice] API Users Passengers'
 HOST='0.0.0.0'
 PORT=3001
 TOKEN_SECRET_KEY='XWPxvcaou37va213cp0xml'
