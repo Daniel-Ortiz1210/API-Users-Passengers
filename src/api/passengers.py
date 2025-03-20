@@ -150,7 +150,7 @@ def create_passenger(
 
         passenger_repository = PassengersRepository(db)
     
-        new_passenger = passenger_repository.create(body_to_dict)
+        new_passenger_id = passenger_repository.create(body_to_dict)
     except IntegrityError as e:
         
         logger.log('ERROR', f"[/api/v1/passengers/] [POST] [400] Error creating passenger: {str(e)}")
@@ -172,7 +172,7 @@ def create_passenger(
         return JSONResponse(content=response.model_dump(), status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
     http_response = SuccessResponse(data={
-        'passenger': body_to_dict,
+        'passenger': {"id": new_passenger_id, **body_to_dict},
         'token': token
     })
 
@@ -343,16 +343,38 @@ def delete_passenger(
 
 @router.get('/{id}/reservations')
 def get_passenger_reservations(
-    id: int = Path(...,title='passenger ID',description='Unique identity value for a passenger')
+    id: int = Path(...,title='passenger ID',description='Unique identity value for a passenger'),
+    decoded_token: dict = Depends(JWTBearerDependencie()),
 ):
+    logger = Logger()
+
     db = DatabaseConnection()
 
     passengers_repository = PassengersRepository(db)
 
-    reservations = passengers_repository.get_reservations(id)
+    passenger = passengers_repository.get_by_email(decoded_token['email'])
 
-    db.close()
+    if not passenger:
+        
+        logger.log('ERROR', f"[/api/v1/passengers/{id}] [DELETE] [404] passenger with ID {id} not found")
+        
+        response = BadResponse(message='passenger not found')
+        
+        return JSONResponse(content=response.model_dump(), status_code=status.HTTP_404_NOT_FOUND)
+    else:
+        if passenger["id"] != id:
+            
+            logger.log('ERROR', f"[/api/v1/passengers/{id}] [DELETE] [403] Forbidden access to passenger with ID {id}")
 
-    json_response = SuccessResponse(data=reservations).model_dump()
+            response = BadResponse(message='passenger logged in does not have access to this resource')
 
-    return JSONResponse(content=json_response, status_code=status.HTTP_200_OK)
+            return JSONResponse(content=response.model_dump(), status_code=status.HTTP_403_FORBIDDEN)
+        else:
+
+            reservations = passengers_repository.get_reservations(id)
+
+            db.close()
+
+            json_response = SuccessResponse(data=reservations).model_dump()
+
+            return JSONResponse(content=json_response, status_code=status.HTTP_200_OK)
