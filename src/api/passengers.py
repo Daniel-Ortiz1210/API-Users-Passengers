@@ -353,4 +353,6 @@ def get_passenger_reservations(
 
     db.close()
 
-    return JSONResponse(content=reservations, status_code=status.HTTP_200_OK)
+    json_response = SuccessResponse(data=reservations).model_dump()
+
+    return JSONResponse(content=json_response, status_code=status.HTTP_200_OK)
