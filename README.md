@@ -44,7 +44,7 @@ HOST='0.0.0.0'
 PORT=3001
 TOKEN_SECRET_KEY='XWPxvcaou37va213cp0xml'
 TOKEN_ALGORITHM='HS256'
-TOKEN_EXPIRATION_IN_MINUTES=2
+TOKEN_EXPIRATION_IN_MINUTES=5
 ```
 
 ### 4. Build and Run the Containers
@@ -91,7 +91,7 @@ Once the containers are up and running, you can access the API documentation usi
 The API documentation is available at the following URL:
 
 ```bash
-http://0.0.0.0:3000/docs
+http://0.0.0.0:3001/docs
 ```
 
 **Note**: The API documentation is generated using Swagger UI.
